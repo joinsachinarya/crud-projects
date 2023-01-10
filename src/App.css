@@ -1,0 +1,23 @@
+.App {
+  text-align: center;
+}
+.left-side{
+  float: left;
+  border: 1px solid black;
+  width: 40%;
+  padding: 5px;
+  margin: 10px;
+}
+.right-side{
+  float: right;
+  border: 1px solid black;
+  width: 40%;
+  padding: 5px;
+  margin: 10px;
+}
+li{
+  list-style: none;
+  border: 1px solid black;
+  margin: 2px;
+  padding: 4px;
+}
