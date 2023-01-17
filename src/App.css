@@ -21,3 +21,6 @@ li{
   margin: 2px;
   padding: 4px;
 }
+ul{
+  list-style:none;
+}
