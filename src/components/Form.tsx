@@ -1,75 +1,35 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { handleAddUser, handleUpdateUser } from "../actions/action";
+import React from 'react';
+import { User } from "../App";
 
-export interface IUserInput{
-  name:string,
-  age:number,
-  email:string
-  id?:number,
-  editUser?:{}
+
+interface Props {
+    user: User
+    setUser: React.Dispatch<React.SetStateAction<User>>
+    handleAddUser: () => void
 }
 
-const Form : React.FC = () => {
-  const dispatch = useDispatch();
-  const editingUser = useSelector((state:any)=>state.crudReducer.editUser);
-  
-  const [inputFields, setInputFields]=useState<IUserInput>({name:"", age:0, email:"", editUser:{}});
+const Form: React.FC<Props> = ({ user, setUser, handleAddUser }) => {
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputFields({...inputFields, [e.target.name]:e.target.value});
-  }
-
-  
-  const onAddUser = () => {
-    
-
-    if (inputFields.name === "" && inputFields.age === 0  && inputFields.email === "") {
-        alert("Please fill the details");
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUser({ ...user, [e.target.name]: e.target.value })
     }
-    else {
-      dispatch(handleAddUser(inputFields))
-      
-        setInputFields({
-            editUser:{},
-            name:"",
-            age:0,
-            email:"",
-        }
-        )
-    }
-  }   
- 
-  
-  useEffect(() => {
-    if(editingUser){
-      setInputFields(editingUser)
-    }},[editingUser])
 
-  return (
+
+
+    return (
     <div className='left'>
 
       <div>
-      <input name="name" value={inputFields.name} onChange={handleChange} placeholder="Enter name" /><br/>
-      <input name="age" value={inputFields.age === 0 ? "" : inputFields.age} onChange={handleChange} placeholder="Enter age" /><br/>
-      <input name="email" value={inputFields.email} onChange={handleChange} placeholder="Enter email" /><br/>
-
+      <input name="name" value={user.name} onChange={handleChange} placeholder="Enter name" /><br/>
+      <input name="age" value={user.age === 0 ? "" : user.age} onChange={handleChange} placeholder="Enter age" /><br/>
+      <input name="email" value={user.email} onChange={handleChange} placeholder="Enter email" /><br/>
       </div>
       
-      {(editingUser===undefined)? 
-      <button onClick={onAddUser}>Add</button>:
-      
-      <button onClick={()=>{
-        dispatch(handleUpdateUser(inputFields));
-        setInputFields({
-          name:"",
-          age:0,
-          email:"",
-          editUser:{}
-        })
-      }}>Update</button>}
+      {(!user.id)? 
+      <button onClick={handleAddUser}>Add</button>:
+      <button onClick={handleAddUser}>Update</button>}
     </div>
-  )
+    )
 }
 
-export default Form;
+export default Form
