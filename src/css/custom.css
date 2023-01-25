@@ -1,0 +1,3 @@
+.btn-blue{
+@apply bg-blue-300 text-lg text-blue-200;
+}
